@@ -5,18 +5,19 @@ import random
 
 URL = 'https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt'
 FILE_NAME = URL.split('/')[-1]
-
+THIS_DIR = os.path.dirname(os.path.realpath(__file__))
+WORDLIST = os.path.join(THIS_DIR, FILE_NAME)
 
 def download_wordlist():
     '''Download the EFF wordlist if not there already'''
-    if not os.path.isfile(FILE_NAME):
+    if not os.path.isfile(WORDLIST):
         print('Downloading EFF large wordlist ...')
-        urllib.request.urlretrieve(URL, FILE_NAME)
+        urllib.request.urlretrieve(URL, WORDLIST)
 
 
 def get_words():
     '''Turn the EFF file into a dict'''
-    with open(FILE_NAME, 'r') as i:
+    with open(WORDLIST, 'r') as i:
         lines = i.read().splitlines()
         phrase_dict = dict([x.split('\t') for x in lines])
     return phrase_dict
